@@ -18,9 +18,9 @@ export const profile = {
   intro:
     "An engineering student who turns messy real-world workflows into systems that run on their own",
 
-  // Path to a 3D avatar image in /public (e.g. "/avatar.png").
-  // Leave empty to show the gradient orb instead.
-  avatar: "",
+  // Profile picture in /public, shown in a gradient ring in the hero.
+  // A square photo works best. Leave empty to show the gradient orb instead.
+  avatar: "/akshata.jpg",
 
   about: [
     "I'm an Electronics & Computer Science engineering student at Vidyalankar Institute of Technology who builds across full-stack web, applied machine learning, and conversational AI.",
@@ -28,7 +28,7 @@ export const profile = {
   ],
 
   links: {
-    email: "akshata.nalawade@vit.edu.in",
+    email: "nalawadeakshata00@gmail.com",
     github: "https://github.com/nalawadeakshata29",
     linkedin: "https://www.linkedin.com/in/akshata-nalawade-b2297436b/",
     // To update the resume, replace this file in /public with the same name.
@@ -259,6 +259,9 @@ export const ui = {
     { href: "#contact", label: "Contact" },
   ],
   greeting: "Hi, I'm",
+  // Small floating tags around the profile picture in the hero.
+  focus: ["Full-stack web", "Computer vision", "Conversational AI"],
+  latestProject: "Latest project",
   availability: "Open to internships", // rendered as "{availability} · Class of {classOf}"
   contactCta: "Contact me",
   emailCta: "Email me",

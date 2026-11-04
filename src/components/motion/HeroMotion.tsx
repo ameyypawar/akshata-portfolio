@@ -42,6 +42,12 @@ export function HeroMotion({ children }: { children: React.ReactNode }) {
             { opacity: 1, y: 0 },
             { opacity: 0, y: -24 },
             0,
+          )
+          .fromTo(
+            "[data-hero-chip]",
+            { opacity: 1 },
+            { opacity: 0, stagger: 0.04 },
+            0,
           );
       });
 
@@ -79,6 +85,14 @@ export function HeroMotion({ children }: { children: React.ReactNode }) {
           duration: 0.8,
           ease: "power3",
         });
+        // Floating tags drift further than the photo, by their data-depth.
+        const depth = gsap.utils
+          .toArray<HTMLElement>("[data-depth]")
+          .map((el) => ({
+            d: parseFloat(el.dataset.depth ?? "1"),
+            x: gsap.quickTo(el, "x", { duration: 1, ease: "power3" }),
+            y: gsap.quickTo(el, "y", { duration: 1, ease: "power3" }),
+          }));
         const onMove = (e: PointerEvent) => {
           const r = root.getBoundingClientRect();
           const nx = ((e.clientX - r.left) / r.width - 0.5) * 2;
@@ -87,6 +101,10 @@ export function HeroMotion({ children }: { children: React.ReactNode }) {
           orbY(ny * 16);
           lightX(nx * -10);
           lightY(ny * -10);
+          for (const m of depth) {
+            m.x(nx * 10 * m.d);
+            m.y(ny * 10 * m.d);
+          }
         };
         root.addEventListener("pointermove", onMove);
         return () => root.removeEventListener("pointermove", onMove);
