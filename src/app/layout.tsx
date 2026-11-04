@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Archivo } from "next/font/google";
+import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -7,6 +8,11 @@ const archivo = Archivo({
   subsets: ["latin"],
   axes: ["wdth"],
 });
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0b",
+  colorScheme: "dark",
+};
 
 export const metadata: Metadata = {
   title: "Akshata Nalawade — Full-stack, AI & ML",
@@ -23,7 +29,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${archivo.variable} antialiased`}>
-      <body className="min-h-dvh overflow-x-clip">{children}</body>
+      <body className="min-h-dvh overflow-x-clip">
+        <SmoothScroll />
+        {children}
+      </body>
     </html>
   );
 }

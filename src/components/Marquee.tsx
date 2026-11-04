@@ -1,17 +1,16 @@
 import { skills } from "@/content/profile";
+import { VelocityMarquee } from "./motion/VelocityMarquee";
 
-// A slow, endless ticker of everything she works with.
-const items = skills.flatMap((s) => s.items).slice(0, 18);
+// A slow ticker of everything she works with. Decorative: the Skills section lists it properly.
+const items = skills.flatMap((s) => s.items).slice(0, 24);
 
-function Row({ hidden = false }: { hidden?: boolean }) {
+function Row() {
   return (
-    <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-center">
+    <ul className="flex shrink-0 items-center">
       {items.map((item) => (
         <li key={item} className="flex items-center">
-          <span className="px-6 sm:px-8">{item}</span>
-          <span aria-hidden className="text-signature">
-            ✦
-          </span>
+          <span className="px-5">{item}</span>
+          <span className="text-[0.625rem] text-pink/80">✦</span>
         </li>
       ))}
     </ul>
@@ -20,11 +19,9 @@ function Row({ hidden = false }: { hidden?: boolean }) {
 
 export function Marquee() {
   return (
-    <div className="overflow-hidden border-y border-line py-5 text-2xl font-black tracking-[-0.02em] text-ash uppercase sm:py-7 sm:text-4xl">
-      <div className="animate-marquee flex w-max">
-        <Row />
-        <Row hidden />
-      </div>
-    </div>
+    <VelocityMarquee className="text-ticker border-y border-line py-4 text-ash uppercase">
+      <Row />
+      <Row />
+    </VelocityMarquee>
   );
 }

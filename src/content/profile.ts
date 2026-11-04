@@ -16,7 +16,7 @@ export const profile = {
 
   // Small uppercase line under the big headline.
   intro:
-    "An engineering student who turns messy real-world workflows into systems that run on their own ✨",
+    "An engineering student who turns messy real-world workflows into systems that run on their own",
 
   // Path to a 3D avatar image in /public (e.g. "/avatar.png").
   // Leave empty to show the gradient orb instead.
@@ -40,17 +40,43 @@ export const profile = {
     "I'm looking for internships in full-stack development and applied AI. If you're hiring, building something interesting, or just want to talk shop, my inbox is open.",
 };
 
+export type ProjectImage = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+};
+
+export type Comparison = {
+  label: string;
+  before: ProjectImage;
+  after: ProjectImage;
+};
+
+// Screenshots go in /public/projects; set image/images and the drawn visual is replaced automatically.
 export type Project = {
   slug: string;
   title: string;
-  kicker: string; // short "cover line" used in the hero
+  kicker?: string; // short "cover line"
+  context?: string; // e.g. "Internship · Trinetrini Quantum"
   summary: string;
-  points: string[];
+  points?: string[];
   tech: string[];
   repo?: string;
   live?: string;
   featured?: boolean;
+  image?: ProjectImage; // cover
+  images?: ProjectImage[]; // extra screenshots; images[0] renders as an inset
+  comparisons?: Comparison[];
+  visual?: "chat-flow" | "sign" | "parlour"; // drawn artwork used when there is no image
 };
+
+const img = (
+  src: string,
+  alt: string,
+  width: number,
+  height: number,
+): ProjectImage => ({ src, alt, width, height });
 
 export const projects: Project[] = [
   {
@@ -77,11 +103,59 @@ export const projects: Project[] = [
     ],
     repo: "https://github.com/nalawadeakshata29/House-Muse",
     featured: true,
+    comparisons: [
+      {
+        label: "Living room · Victorian",
+        before: img(
+          "/projects/house-muse-before-1.jpg",
+          "The original photo: an empty room with a tall arched window",
+          1024,
+          640,
+        ),
+        after: img(
+          "/projects/house-muse-after-1.jpg",
+          "House Muse redesign of the same room in a Victorian style, with the arched window kept in place",
+          1024,
+          640,
+        ),
+      },
+      {
+        label: "Bedroom · Victorian",
+        before: img(
+          "/projects/house-muse-before-2.jpg",
+          "The original photo: a plain bedroom",
+          1024,
+          640,
+        ),
+        after: img(
+          "/projects/house-muse-after-2.jpg",
+          "House Muse redesign of the same bedroom in a Victorian style",
+          1024,
+          640,
+        ),
+      },
+      {
+        label: "Living room · Eclectic",
+        before: img(
+          "/projects/house-muse-before-3.jpg",
+          "The original photo: an empty living room",
+          640,
+          1024,
+        ),
+        after: img(
+          "/projects/house-muse-after-3.jpg",
+          "House Muse redesign of the same living room in an eclectic style",
+          640,
+          1024,
+        ),
+      },
+    ],
   },
   {
     slug: "salesiq-chatbot",
     title: "Lead-handling chatbot",
     kicker: "A chatbot that answers visitors and captures leads",
+    context: "Internship · Trinetrini Quantum",
     summary:
       "A conversion-focused chatbot for Trinetrini Quantum's website, built on Zoho SalesIQ to automate lead handling.",
     points: [
@@ -96,6 +170,29 @@ export const projects: Project[] = [
       "Decision trees",
       "JavaScript",
     ],
+    visual: "chat-flow",
+  },
+  {
+    slug: "netlab",
+    title: "NetLab",
+    summary:
+      "A virtual network lab, now at v2.0, with six interactive experiments: Stop-and-Wait, Go-Back-N, Selective Repeat, Error Detection, Timeout ARQ, and Window Analysis.",
+    tech: ["JavaScript", "Canvas", "Networking"],
+    repo: "https://github.com/nalawadeakshata29/Net-lab",
+    image: img(
+      "/projects/netlab-home.jpg",
+      "NetLab v2.0 home page listing its six experiments",
+      1440,
+      900,
+    ),
+    images: [
+      img(
+        "/projects/netlab-go-back-n.jpg",
+        "NetLab's Go-Back-N timeline: frames and acknowledgements between sender and receiver, with a lost frame marked in red",
+        1060,
+        740,
+      ),
+    ],
   },
   {
     slug: "ishaara-speak",
@@ -107,8 +204,30 @@ export const projects: Project[] = [
       "Real-time audio processing and gesture mapping.",
       "Built with CNNs, OpenCV, and MediaPipe.",
     ],
-    tech: ["Python", "JavaScript", "CNN", "OpenCV", "MediaPipe", "3D animation"],
+    tech: [
+      "Python",
+      "JavaScript",
+      "CNN",
+      "OpenCV",
+      "MediaPipe",
+      "3D animation",
+    ],
     repo: "https://github.com/nalawadeakshata29/ishaara_speak",
+    visual: "sign",
+  },
+  {
+    slug: "weather-classification",
+    title: "Weather Classification",
+    summary:
+      "Classifies weather from sky images, comparing MobileNetV2, ResNet18, and a custom CNN, with Grad-CAM explanations and a Flask web app.",
+    tech: ["PyTorch", "CNN", "Grad-CAM", "Flask"],
+    repo: "https://github.com/nalawadeakshata29/Weather-Classification",
+    image: img(
+      "/projects/weather-gradcam.jpg",
+      "Grad-CAM heatmap over a landscape photo, showing the regions the weather classifier relied on",
+      640,
+      427,
+    ),
   },
   {
     slug: "creamy-bliss",
@@ -120,27 +239,57 @@ export const projects: Project[] = [
       "Node.js backend and PostgreSQL database supporting day-to-day operations.",
     ],
     tech: ["HTML", "CSS", "JavaScript", "Node.js", "PostgreSQL"],
+    visual: "parlour",
   },
 ];
 
-// Smaller builds from GitHub that aren't on the resume.
-export const otherWork: Pick<Project, "title" | "summary" | "tech" | "repo">[] =
-  [
-    {
-      title: "Weather Classification",
-      summary:
-        "Classifies weather from sky images, comparing MobileNetV2, ResNet18, and a custom CNN, with Grad-CAM explanations and a Flask web app.",
-      tech: ["PyTorch", "CNN", "Grad-CAM", "Flask"],
-      repo: "https://github.com/nalawadeakshata29/Weather-Classification",
-    },
-    {
-      title: "NetLab",
-      summary:
-        "A virtual network lab that animates Stop-and-Wait, Go-Back-N, and Selective Repeat ARQ protocols in the browser.",
-      tech: ["JavaScript", "Canvas", "Networking"],
-      repo: "https://github.com/nalawadeakshata29/Net-lab",
-    },
-  ];
+export const stats = [
+  { value: "3", label: "services behind House Muse" },
+  { value: "6", label: "interactive experiments in NetLab" },
+  { value: "3", label: "models compared for weather classification" },
+  { value: "60h", label: "cloud & Linux training at C-DAC" },
+];
+
+export const ui = {
+  skipLink: "Skip to content",
+  nav: [
+    { href: "#about", label: "About" },
+    { href: "#projects", label: "Work" },
+    { href: "#experience", label: "Experience" },
+    { href: "#contact", label: "Contact" },
+  ],
+  greeting: "Hi, I'm",
+  availability: "Open to internships", // rendered as "{availability} · Class of {classOf}"
+  contactCta: "Contact me",
+  emailCta: "Email me",
+  resumeCta: "Download resume",
+  backToTop: "Back to top",
+  sections: {
+    about: { eyebrow: "Who I am", title: "About me" },
+    projects: { eyebrow: "Selected work", title: "Projects" },
+    experience: { eyebrow: "Internship & courses", title: "Experience" },
+    skills: { eyebrow: "Toolkit", title: "Skills" },
+    contact: { eyebrow: "Get in touch", title: "Let's talk" },
+  },
+  bento: {
+    now: "What I build",
+    education: "Education",
+    basedIn: "Based in",
+    numbers: "By the numbers",
+    beyond: "Beyond code",
+  },
+  work: {
+    flagship: "Flagship project",
+    viewCode: "View the code",
+    before: "Before",
+    after: "After",
+    dragHint: "Drag to compare",
+    sliderLabel: "Compare the original photo with the redesign",
+    pairsLabel: "Choose a room",
+    countSuffix: "projects",
+  },
+  social: { github: "GitHub", linkedin: "LinkedIn" },
+};
 
 export const experience = [
   {

@@ -1,104 +1,172 @@
-import { otherWork, projects } from "@/content/profile";
+import Image from "next/image";
+import { projects, ui, type Project } from "@/content/profile";
+import { BeforeAfter } from "./BeforeAfter";
+import { ProjectStack } from "./motion/ProjectStack";
+import { ProjectVisual } from "./ProjectVisual";
 import { ArrowLink, Section, Tags } from "./Section";
+
+function Media({ p }: { p: Project }) {
+  const inset = p.images?.[0];
+  return (
+    <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-line bg-ink">
+      {p.image ? (
+        <Image
+          src={p.image.src}
+          alt={p.image.alt}
+          fill
+          sizes="(min-width: 1280px) 672px, (min-width: 768px) 56vw, 100vw"
+          className="object-cover"
+        />
+      ) : (
+        <ProjectVisual kind={p.visual} title={p.title} />
+      )}
+      {p.image && inset && (
+        <div
+          className="absolute right-3 bottom-3 w-[46%] overflow-hidden rounded-xl shadow-2xl ring-1 ring-white/10"
+          style={{ aspectRatio: `${inset.width} / ${inset.height}` }}
+        >
+          <Image
+            src={inset.src}
+            alt={inset.alt}
+            fill
+            sizes="(min-width: 768px) 310px, 45vw"
+            className="object-cover"
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Featured({ p }: { p: Project }) {
+  const comps = p.comparisons ?? [];
+  const landscape = comps.filter((c) => c.after.width >= c.after.height);
+  const portrait = comps.filter((c) => c.after.width < c.after.height);
+  const labels = {
+    before: ui.work.before,
+    after: ui.work.after,
+    dragHint: ui.work.dragHint,
+    sliderLabel: ui.work.sliderLabel,
+    pairsLabel: ui.work.pairsLabel,
+  };
+
+  return (
+    <article id={p.slug}>
+      {comps.length > 0 ? (
+        <div className="grid items-start gap-4 md:grid-cols-[2.56fr_1fr] md:gap-5">
+          {landscape.length > 0 && (
+            <BeforeAfter
+              pairs={landscape}
+              labels={labels}
+              hint
+              sizes="(min-width: 1280px) 830px, (min-width: 768px) 70vw, 100vw"
+            />
+          )}
+          {portrait.length > 0 && (
+            <BeforeAfter
+              pairs={portrait}
+              labels={labels}
+              className="max-w-[20rem] md:max-w-none"
+              sizes="(min-width: 1280px) 325px, (min-width: 768px) 27vw, 80vw"
+            />
+          )}
+        </div>
+      ) : (
+        <Media p={p} />
+      )}
+
+      <div className="mt-10 grid gap-8 md:grid-cols-12 md:gap-10">
+        <div className="md:col-span-5">
+          <p className="text-label text-ash uppercase">{ui.work.flagship}</p>
+          <h3 className="text-h3 mt-3 uppercase">{p.title}</h3>
+          {p.kicker && <p className="text-lead mt-4 text-fog">{p.kicker}</p>}
+          <p className="mt-3 text-[0.9375rem] text-ash">{p.summary}</p>
+          <div className="mt-6">
+            <Tags items={p.tech} />
+          </div>
+          {p.repo && (
+            <p className="mt-6">
+              <ArrowLink href={p.repo}>{ui.work.viewCode}</ArrowLink>
+            </p>
+          )}
+        </div>
+        {p.points && (
+          <ol className="grid gap-x-8 gap-y-5 md:col-span-7 lg:grid-cols-2">
+            {p.points.map((pt, i) => (
+              <li key={pt}>
+                <span className="text-label block text-ash">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="mt-1 block text-[0.9375rem] leading-relaxed text-fog/80">
+                  {pt}
+                </span>
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
+    </article>
+  );
+}
 
 export function Work() {
   const featured = projects.find((p) => p.featured);
   const rest = projects.filter((p) => !p.featured);
 
   return (
-    <Section id="projects" title="Projects">
-      {featured && (
-        <article
-          id={featured.slug}
-          className="border-signature grid gap-10 rounded-[2rem] p-7 sm:p-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16"
-        >
-          <div className="flex flex-col">
-            <p className="text-signature text-xs font-extrabold tracking-[0.14em] uppercase">
-              Flagship project
-            </p>
-            <h3 className="mt-4 text-[clamp(2.75rem,7vw,6rem)] leading-[0.85] font-black tracking-[-0.045em] uppercase">
-              {featured.title}
-            </h3>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty sm:text-xl">
-              {featured.summary}
-            </p>
-            <div className="mt-8 lg:mt-auto lg:pt-10">
-              <Tags items={featured.tech} />
-              {featured.repo && (
-                <p className="mt-6">
-                  <ArrowLink href={featured.repo}>View the code</ArrowLink>
-                </p>
-              )}
-            </div>
-          </div>
-          <ul className="space-y-5 leading-relaxed text-ash lg:pt-10">
-            {featured.points.map((pt) => (
-              <li key={pt} className="flex gap-4">
-                <span
-                  aria-hidden
-                  className="bg-signature mt-2.5 size-1.5 shrink-0 rounded-full"
-                />
-                <span>{pt}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
-      )}
+    <Section
+      id="projects"
+      eyebrow={ui.sections.projects.eyebrow}
+      title={ui.sections.projects.title}
+      aside={`${projects.length} ${ui.work.countSuffix}`}
+    >
+      {featured && <Featured p={featured} />}
 
-      <div className="mt-6 grid gap-6 md:grid-cols-3">
-        {rest.map((p) => (
+      <ProjectStack className="mt-16 flex flex-col gap-6 md:mt-24 stack:gap-[8vh] stack:pb-[8vh]">
+        {rest.map((p, i) => (
           <article
             key={p.slug}
             id={p.slug}
-            className="group flex flex-col rounded-[2rem] border-[1.5px] border-line bg-panel p-7 transition-colors hover:border-pink/60 sm:p-8"
+            data-stack-card
+            style={{ "--i": i } as React.CSSProperties}
+            className="stack:sticky stack:top-[calc(5.5rem+var(--i)*1.25rem)]"
           >
-            <h3 className="text-3xl leading-[0.9] font-black tracking-[-0.03em] uppercase sm:text-4xl">
-              {p.title}
-            </h3>
-            <p className="mt-4 leading-relaxed">{p.summary}</p>
-            <ul className="mt-4 space-y-2 text-sm leading-relaxed text-ash">
-              {p.points.map((pt) => (
-                <li key={pt}>{pt}</li>
-              ))}
-            </ul>
-            <div className="mt-auto pt-8">
-              <Tags items={p.tech} />
-              {p.repo && (
-                <p className="mt-6">
-                  <ArrowLink href={p.repo}>View the code</ArrowLink>
+            <div
+              data-stack-inner
+              className="relative grid origin-top gap-6 overflow-hidden rounded-[1.75rem] border border-line bg-panel p-5 sm:p-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10 md:p-8 stack:h-[min(calc(100svh-9rem),38rem)]"
+            >
+              <div className="flex flex-col">
+                {p.context && (
+                  <p className="text-label text-ash uppercase">{p.context}</p>
+                )}
+                <h3 className="text-h3 mt-4 uppercase">{p.title}</h3>
+                {p.kicker && (
+                  <p className="text-lead mt-4 text-fog">{p.kicker}</p>
+                )}
+                <p className="mt-3 text-[0.9375rem] leading-relaxed text-ash">
+                  {p.summary}
                 </p>
-              )}
+                <div className="mt-auto pt-6">
+                  <Tags items={p.tech} />
+                  {p.repo && (
+                    <p className="mt-6">
+                      <ArrowLink href={p.repo}>{ui.work.viewCode}</ArrowLink>
+                    </p>
+                  )}
+                </div>
+              </div>
+              <div className="order-first md:order-none md:self-center">
+                <Media p={p} />
+              </div>
+              <div
+                data-stack-shade
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-ink opacity-0"
+              />
             </div>
           </article>
         ))}
-      </div>
-
-      <h3 className="mt-20 mb-4 text-xs font-extrabold tracking-[0.14em] text-ash uppercase">
-        Also on GitHub
-      </h3>
-      <ul className="divide-y divide-line border-y border-line">
-        {otherWork.map((w) => (
-          <li key={w.title}>
-            <a
-              href={w.repo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group grid gap-2 py-7 sm:grid-cols-[minmax(0,22rem)_1fr_auto] sm:items-center sm:gap-10"
-            >
-              <span className="text-2xl font-black tracking-[-0.03em] uppercase transition-colors group-hover:text-pink sm:text-3xl">
-                {w.title}
-              </span>
-              <span className="text-ash">{w.summary}</span>
-              <span
-                aria-hidden
-                className="hidden text-2xl transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 sm:block"
-              >
-                ↗
-              </span>
-            </a>
-          </li>
-        ))}
-      </ul>
+      </ProjectStack>
     </Section>
   );
 }

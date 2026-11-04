@@ -4,73 +4,116 @@ import {
   experience,
   profile,
   skills,
+  stats,
+  ui,
 } from "@/content/profile";
-import { Section } from "./Section";
+import { RevealGroup } from "./motion/RevealGroup";
+import { WordReveal } from "./motion/WordReveal";
+import { AvailabilityPill, Section } from "./Section";
 
 export function About() {
+  const label = "text-label text-ash uppercase";
   return (
-    <Section id="about" title="About me">
-      <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
-        <div className="space-y-6 text-xl leading-relaxed text-pretty sm:text-2xl">
-          {profile.about.map((para, i) => (
-            <p key={para} className={i === 0 ? "text-fog" : "text-ash"}>
-              {para}
-            </p>
-          ))}
-        </div>
+    <Section
+      id="about"
+      eyebrow={ui.sections.about.eyebrow}
+      title={ui.sections.about.title}
+    >
+      <WordReveal
+        text={profile.about[0]}
+        className="text-statement max-w-[24em] text-fog"
+      />
 
-        <div className="space-y-6">
-          {education.map((ed) => (
-            <div
-              key={ed.school}
-              className="rounded-[1.5rem] border-[1.5px] border-line bg-panel p-7"
-            >
-              <p className="text-xs font-extrabold tracking-[0.14em] text-ash uppercase">
-                Education · {ed.when}
-              </p>
-              <p className="mt-3 text-2xl leading-tight font-black tracking-[-0.02em] uppercase">
-                {ed.school}
-              </p>
-              <p className="mt-2 text-ash">{ed.detail}</p>
-              <p className="text-signature mt-4 text-sm font-extrabold tracking-[0.06em] uppercase">
-                {ed.score}
-              </p>
-            </div>
-          ))}
+      <RevealGroup className="mt-12 grid gap-3 md:mt-16 md:grid-cols-6 md:gap-4 lg:grid-cols-12">
+        <article
+          data-reveal
+          className="bento flex flex-col md:col-span-6 lg:col-span-7 lg:row-span-2"
+        >
+          <p className={label}>{ui.bento.now}</p>
+          <p className="text-lead mt-4 max-w-[34em] text-fog/85">
+            {profile.about[1]}
+          </p>
+          <p className="text-label mt-auto pt-8 text-fog uppercase">
+            {profile.role}
+          </p>
+        </article>
 
-          <div className="rounded-[1.5rem] border-[1.5px] border-line p-7">
-            <p className="text-xs font-extrabold tracking-[0.14em] text-ash uppercase">
-              Beyond code
+        {education.map((ed) => (
+          <article
+            key={ed.school}
+            data-reveal
+            className="bento md:col-span-3 lg:col-span-5"
+          >
+            <p className={label}>
+              {ui.bento.education} · {ed.when}
             </p>
-            <p className="mt-3 leading-relaxed">{beyondCode}</p>
+            <p className="mt-4 text-xl leading-tight font-extrabold uppercase">
+              {ed.school}
+            </p>
+            <p className="mt-1 text-[0.9375rem] text-ash">{ed.detail}</p>
+            <p className="text-label mt-5 text-fog uppercase">{ed.score}</p>
+          </article>
+        ))}
+
+        <article data-reveal className="bento md:col-span-3 lg:col-span-5">
+          <p className={label}>{ui.bento.basedIn}</p>
+          <p className="mt-4 text-xl leading-tight font-extrabold uppercase">
+            {profile.location}
+          </p>
+          <div className="mt-5">
+            <AvailabilityPill />
           </div>
-        </div>
-      </div>
+        </article>
+
+        <article data-reveal className="bento md:col-span-6 lg:col-span-7">
+          <p className={label}>{ui.bento.numbers}</p>
+          <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4">
+            {stats.map((st) => (
+              <div key={st.label} className="flex flex-col-reverse">
+                <dt className="mt-2 text-[0.8125rem] leading-snug text-ash">
+                  {st.label}
+                </dt>
+                <dd className="text-h2">{st.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </article>
+
+        <article data-reveal className="bento md:col-span-6 lg:col-span-5">
+          <p className={label}>{ui.bento.beyond}</p>
+          <p className="mt-4 text-[0.9375rem] leading-relaxed text-ash">
+            {beyondCode}
+          </p>
+        </article>
+      </RevealGroup>
     </Section>
   );
 }
 
 export function Experience() {
   return (
-    <Section id="experience" title="Experience">
-      <ol className="divide-y divide-line border-y border-line">
+    <Section
+      id="experience"
+      eyebrow={ui.sections.experience.eyebrow}
+      title={ui.sections.experience.title}
+    >
+      <RevealGroup as="ol" className="border-t border-line">
         {experience.map((e) => (
           <li
             key={e.title}
-            className="grid gap-4 py-10 md:grid-cols-[14rem_1fr] md:gap-12"
+            data-reveal
+            className="grid gap-3 border-b border-line py-8 md:grid-cols-[12rem_1fr] md:gap-10 md:py-10"
           >
-            <p className="text-xs font-extrabold tracking-[0.14em] text-ash uppercase md:pt-2">
-              {e.when}
-            </p>
+            <p className="text-label text-ash uppercase md:pt-1.5">{e.when}</p>
             <div>
-              <h3 className="text-2xl leading-tight font-black tracking-[-0.03em] uppercase sm:text-4xl">
+              <h3 className="text-xl leading-tight font-extrabold tracking-[-0.01em] uppercase md:text-2xl">
                 {e.title}
               </h3>
-              <p className="text-signature mt-2 inline-block font-bold">
+              <p className="mt-1 text-[0.9375rem] font-semibold text-fog/70">
                 {e.org}
               </p>
               {e.points.length > 0 && (
-                <ul className="mt-5 max-w-3xl space-y-2 leading-relaxed text-ash">
+                <ul className="mt-4 max-w-2xl space-y-1.5 text-[0.9375rem] leading-relaxed text-ash">
                   {e.points.map((pt) => (
                     <li key={pt}>{pt}</li>
                   ))}
@@ -79,25 +122,30 @@ export function Experience() {
             </div>
           </li>
         ))}
-      </ol>
+      </RevealGroup>
     </Section>
   );
 }
 
 export function Skills() {
   return (
-    <Section id="skills" title="Skills">
-      <dl className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+    <Section
+      id="skills"
+      eyebrow={ui.sections.skills.eyebrow}
+      title={ui.sections.skills.title}
+    >
+      <RevealGroup
+        as="dl"
+        className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3"
+      >
         {skills.map((s) => (
-          <div key={s.group}>
-            <dt className="text-xs font-extrabold tracking-[0.14em] text-ash uppercase">
-              {s.group}
-            </dt>
-            <dd className="mt-4 flex flex-wrap gap-2">
+          <div key={s.group} data-reveal className="border-t border-line pt-5">
+            <dt className="text-label text-ash uppercase">{s.group}</dt>
+            <dd className="mt-4 flex flex-wrap gap-1.5">
               {s.items.map((item) => (
                 <span
                   key={item}
-                  className="rounded-full border border-line bg-panel px-4 py-2 text-sm font-semibold"
+                  className="rounded-full border border-line px-3 py-1.5 text-[0.8125rem] font-medium text-fog/90"
                 >
                   {item}
                 </span>
@@ -105,7 +153,7 @@ export function Skills() {
             </dd>
           </div>
         ))}
-      </dl>
+      </RevealGroup>
     </Section>
   );
 }
@@ -113,57 +161,53 @@ export function Skills() {
 export function Contact() {
   const { email, github, linkedin, resume } = profile.links;
   return (
-    <section
+    <Section
       id="contact"
-      aria-labelledby="contact-heading"
-      className="mx-auto max-w-[1600px] px-5 pt-20 pb-16 text-center sm:px-10 sm:pt-28"
+      eyebrow={ui.sections.contact.eyebrow}
+      title={ui.sections.contact.title}
     >
-      <h2
-        id="contact-heading"
-        className="text-[clamp(3.5rem,15vw,14rem)] leading-[0.82] font-black tracking-[-0.05em] uppercase"
-      >
-        Let&apos;s <span className="text-signature">talk</span>
-      </h2>
-      <p className="mx-auto mt-10 max-w-xl text-lg leading-relaxed text-pretty text-ash">
-        {profile.contactNote}
-      </p>
-      <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-        <a
-          href={`mailto:${email}`}
-          className="bg-signature rounded-full px-8 py-4 text-sm font-extrabold tracking-[0.06em] text-white uppercase shadow-[0_10px_40px_rgb(240_80_155/0.35)] transition-transform hover:scale-[1.04]"
-        >
-          {email}
-        </a>
-        <a
-          href={resume}
-          download
-          className="rounded-full border-[1.5px] border-line px-8 py-4 text-sm font-extrabold tracking-[0.06em] uppercase transition-colors hover:border-fog"
-        >
-          Download resume ↓
-        </a>
+      <div className="grid gap-10 md:grid-cols-12 md:items-end">
+        <div className="md:col-span-7">
+          <p className="text-lead max-w-xl text-ash">{profile.contactNote}</p>
+          <a
+            href={`mailto:${email}`}
+            className="link-underline mt-8 inline-block text-[clamp(1.125rem,0.6rem+2.4vw,2.25rem)] font-extrabold tracking-[-0.02em] break-all"
+          >
+            {email}
+          </a>
+        </div>
+        <div className="flex flex-col items-start gap-4 md:col-span-5 md:items-end">
+          <AvailabilityPill />
+          <a href={`mailto:${email}`} className="pill-cta">
+            {ui.emailCta}
+          </a>
+          <a href={resume} download className="pill-ghost">
+            {ui.resumeCta} ↓
+          </a>
+          <ul className="text-label flex gap-6 uppercase">
+            <li>
+              <a
+                href={github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-underline text-ash transition-colors hover:text-pink"
+              >
+                {ui.social.github} ↗
+              </a>
+            </li>
+            <li>
+              <a
+                href={linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-underline text-ash transition-colors hover:text-pink"
+              >
+                {ui.social.linkedin} ↗
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <ul className="mt-10 flex justify-center gap-8 text-xs font-extrabold tracking-[0.14em] uppercase">
-        <li>
-          <a
-            href={github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-ash transition-colors hover:text-pink"
-          >
-            GitHub ↗
-          </a>
-        </li>
-        <li>
-          <a
-            href={linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-ash transition-colors hover:text-pink"
-          >
-            LinkedIn ↗
-          </a>
-        </li>
-      </ul>
-    </section>
+    </Section>
   );
 }
