@@ -20,7 +20,7 @@ export const profile = {
 
   // Profile picture in /public, shown in a gradient ring in the hero.
   // A square photo works best. Leave empty to show the gradient orb instead.
-  avatar: "/akshata.jpg",
+  avatar: "/akshata-portrait.jpg",
 
   about: [
     "I'm an Electronics & Computer Science engineering student at Vidyalankar Institute of Technology who builds across full-stack web, applied machine learning, and conversational AI.",
