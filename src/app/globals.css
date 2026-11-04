@@ -1,26 +1,87 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Palette taken from Akshata's own GitHub profile, deepened for a full page.
+ *   ink      #140a10  page background (plum-black)
+ *   surface  #1f1018  cards
+ *   line     #3a1f2c  borders / rules
+ *   mulberry #8a4560  quiet accents
+ *   rose     #d9849f  primary accent
+ *   blush    #f2d4e0  primary text
+ *   mist     #bfa5b2  secondary text
+ */
+@theme {
+  --color-ink: #140a10;
+  --color-surface: #1f1018;
+  --color-line: #3a1f2c;
+  --color-mulberry: #8a4560;
+  --color-rose: #d9849f;
+  --color-blush: #f2d4e0;
+  --color-mist: #bfa5b2;
+
+  --font-display: var(--font-bodoni), "Didot", "Bodoni 72", serif;
+  --font-sans: var(--font-hanken), system-ui, sans-serif;
+  --font-mono: var(--font-fragment), ui-monospace, monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: var(--color-blush);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-rose);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-rose);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Hero: the name rises out of a mask, then the cover lines follow. */
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  display: inline-block;
+  animation: rise 1s cubic-bezier(0.2, 0.7, 0.1, 1) both;
+}
+
+.fade-up {
+  animation: fade-up 0.8s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rise,
+  .fade-up {
+    animation: none;
+  }
 }
