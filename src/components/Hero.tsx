@@ -1,92 +1,80 @@
-import { profile, projects } from "@/content/profile";
+import Image from "next/image";
+import { profile } from "@/content/profile";
 
-const coverLines = projects.slice(0, 3);
+const navLinks = [
+  { href: "#about", label: "About" },
+  { href: "#projects", label: "Projects" },
+  { href: "#experience", label: "Experience" },
+  { href: "#contact", label: "Contact" },
+];
+
+function Avatar() {
+  const size = "size-[clamp(190px,23vw,360px)]";
+  if (profile.avatar) {
+    return (
+      <Image
+        src={profile.avatar}
+        alt={`3D avatar of ${profile.name.first}`}
+        width={880}
+        height={880}
+        priority
+        className={`${size} animate-float object-contain drop-shadow-[0_40px_80px_rgb(240_80_155/0.35)]`}
+      />
+    );
+  }
+  return <div aria-hidden className={`orb ${size} animate-float`} />;
+}
 
 export function Hero() {
   return (
-    <section className="mx-auto flex min-h-[min(calc(100dvh-4rem),60rem)] max-w-6xl flex-col justify-between gap-12 px-6 pt-10 pb-14 sm:pt-16">
-      <p className="fade-up font-mono text-xs tracking-[0.18em] text-mist uppercase">
-        {profile.location} · {profile.role} · VIT, class of {profile.classOf}
-      </p>
+    <header className="relative mx-auto max-w-[1600px] px-5 pt-6 pb-16 sm:px-10 sm:pb-20">
+      <nav aria-label="Main">
+        <ul className="flex justify-between text-[0.7rem] font-bold tracking-[0.08em] uppercase sm:justify-around sm:text-xs">
+          {navLinks.map((l) => (
+            <li key={l.href}>
+              <a href={l.href} className="transition-colors hover:text-pink">
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-      <h1 className="font-display text-[clamp(4.25rem,16vw,13.5rem)] leading-[0.86] font-medium tracking-[-0.02em]">
-        <span className="block overflow-hidden pb-[0.06em]">
-          <span className="rise">{profile.name.first}</span>
-        </span>
-        <span className="block overflow-hidden pb-[0.1em] text-rose italic">
-          <span className="rise [animation-delay:120ms]">{profile.name.last}</span>
-        </span>
+      <h1 className="enter relative mt-10 text-center text-[18vw] leading-[0.82] font-black tracking-[-0.05em] text-fog uppercase sm:mt-8 sm:text-[min(11.4vw,184px)]">
+        <span className="block sm:inline">Hi, I&apos;m </span>
+        <span className="block sm:inline">{profile.name.first}</span>
       </h1>
 
-      <div className="grid gap-10 border-t border-line pt-8 md:grid-cols-[1.1fr_1fr] md:gap-16">
-        <div className="fade-up [animation-delay:500ms]">
-          <p className="font-display text-2xl leading-snug text-balance italic sm:text-3xl">
-            “{profile.thesis}”
+      <div className="relative z-10 grid items-start gap-10 sm:grid-cols-[1fr_auto_1fr] sm:gap-6">
+        <div className="enter order-2 [animation-delay:250ms] sm:order-1 sm:pt-10">
+          <p className="max-w-[21rem] text-sm leading-snug font-bold tracking-[0.02em] uppercase sm:text-[0.95rem]">
+            {profile.intro}
           </p>
-          <p className="mt-4 max-w-md text-mist">
-            Full-stack web, applied machine learning, and conversational AI.
+          <p className="mt-4 text-xs font-semibold tracking-[0.12em] text-ash uppercase">
+            {profile.location} · B.Tech ECS, VIT &apos;{profile.classOf.slice(2)}
           </p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a
-              href={`mailto:${profile.links.email}`}
-              className="rounded-full bg-rose px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-blush"
-            >
-              Email Akshata
-            </a>
-            <a
-              href={profile.links.resume}
-              download
-              className="rounded-full border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-rose hover:text-rose"
-            >
-              Download resume ↓
-            </a>
-            <span className="flex gap-5 pl-2 font-mono text-xs">
-              <a
-                href={profile.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-mist transition-colors hover:text-rose"
-              >
-                GitHub ↗
-              </a>
-              <a
-                href={profile.links.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-mist transition-colors hover:text-rose"
-              >
-                LinkedIn ↗
-              </a>
-            </span>
-          </div>
         </div>
 
-        <nav
-          aria-label="Featured projects"
-          className="fade-up [animation-delay:700ms]"
-        >
-          <p className="font-mono text-xs tracking-[0.2em] text-rose uppercase">
-            Inside
-          </p>
-          <ul className="mt-4 divide-y divide-line">
-            {coverLines.map((p) => (
-              <li key={p.slug}>
-                <a
-                  href={`#${p.slug}`}
-                  className="group block py-4 first:pt-2"
-                >
-                  <span className="font-mono text-[0.7rem] tracking-[0.18em] text-mist uppercase">
-                    {p.title}
-                  </span>
-                  <span className="mt-1 block font-display text-xl leading-snug transition-colors group-hover:text-rose sm:text-2xl">
-                    {p.kicker}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="order-1 -mt-[5vw] justify-self-center sm:order-2 sm:-mt-[3.4vw]">
+          <Avatar />
+        </div>
+
+        <div className="enter order-3 flex flex-col items-start gap-4 [animation-delay:400ms] sm:items-end sm:pt-10">
+          <a
+            href={`mailto:${profile.links.email}`}
+            className="bg-signature rounded-full px-7 py-3.5 text-sm font-extrabold tracking-[0.06em] text-white uppercase shadow-[0_10px_40px_rgb(240_80_155/0.35)] transition-transform hover:scale-[1.04]"
+          >
+            Contact me
+          </a>
+          <a
+            href={profile.links.resume}
+            download
+            className="text-xs font-bold tracking-[0.1em] text-ash uppercase underline-offset-4 transition-colors hover:text-fog hover:underline"
+          >
+            Download resume ↓
+          </a>
+        </div>
       </div>
-    </section>
+    </header>
   );
 }

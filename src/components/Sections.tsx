@@ -9,16 +9,41 @@ import { Section } from "./Section";
 
 export function About() {
   return (
-    <Section id="about" label="About">
-      <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
-        <p className="font-display text-3xl leading-tight text-balance sm:text-4xl">
-          Engineering student at {profile.school}, building across{" "}
-          <em className="text-rose">web, AI, and the cloud.</em>
-        </p>
-        <div className="space-y-5 text-lg leading-relaxed text-mist">
-          {profile.about.map((para) => (
-            <p key={para}>{para}</p>
+    <Section id="about" title="About me">
+      <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-20">
+        <div className="space-y-6 text-xl leading-relaxed text-pretty sm:text-2xl">
+          {profile.about.map((para, i) => (
+            <p key={para} className={i === 0 ? "text-fog" : "text-ash"}>
+              {para}
+            </p>
           ))}
+        </div>
+
+        <div className="space-y-6">
+          {education.map((ed) => (
+            <div
+              key={ed.school}
+              className="rounded-[1.5rem] border-[1.5px] border-line bg-panel p-7"
+            >
+              <p className="text-xs font-extrabold tracking-[0.14em] text-ash uppercase">
+                Education · {ed.when}
+              </p>
+              <p className="mt-3 text-2xl leading-tight font-black tracking-[-0.02em] uppercase">
+                {ed.school}
+              </p>
+              <p className="mt-2 text-ash">{ed.detail}</p>
+              <p className="text-signature mt-4 text-sm font-extrabold tracking-[0.06em] uppercase">
+                {ed.score}
+              </p>
+            </div>
+          ))}
+
+          <div className="rounded-[1.5rem] border-[1.5px] border-line p-7">
+            <p className="text-xs font-extrabold tracking-[0.14em] text-ash uppercase">
+              Beyond code
+            </p>
+            <p className="mt-3 leading-relaxed">{beyondCode}</p>
+          </div>
         </div>
       </div>
     </Section>
@@ -27,21 +52,25 @@ export function About() {
 
 export function Experience() {
   return (
-    <Section id="experience" label="Experience & training">
+    <Section id="experience" title="Experience">
       <ol className="divide-y divide-line border-y border-line">
         {experience.map((e) => (
           <li
             key={e.title}
-            className="grid gap-3 py-8 sm:grid-cols-[12rem_1fr] sm:gap-10"
+            className="grid gap-4 py-10 md:grid-cols-[14rem_1fr] md:gap-12"
           >
-            <p className="font-mono text-xs tracking-[0.12em] text-mist uppercase sm:pt-2">
+            <p className="text-xs font-extrabold tracking-[0.14em] text-ash uppercase md:pt-2">
               {e.when}
             </p>
             <div>
-              <h3 className="font-display text-2xl sm:text-3xl">{e.title}</h3>
-              <p className="mt-1 text-rose">{e.org}</p>
+              <h3 className="text-2xl leading-tight font-black tracking-[-0.03em] uppercase sm:text-4xl">
+                {e.title}
+              </h3>
+              <p className="text-signature mt-2 inline-block font-bold">
+                {e.org}
+              </p>
               {e.points.length > 0 && (
-                <ul className="mt-4 space-y-2 leading-relaxed text-mist">
+                <ul className="mt-5 max-w-3xl space-y-2 leading-relaxed text-ash">
                   {e.points.map((pt) => (
                     <li key={pt}>{pt}</li>
                   ))}
@@ -57,13 +86,22 @@ export function Experience() {
 
 export function Skills() {
   return (
-    <Section id="skills" label="Skills">
-      <dl className="grid gap-x-12 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+    <Section id="skills" title="Skills">
+      <dl className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {skills.map((s) => (
           <div key={s.group}>
-            <dt className="font-display text-xl italic">{s.group}</dt>
-            <dd className="mt-3 leading-relaxed text-mist">
-              {s.items.join(" · ")}
+            <dt className="text-xs font-extrabold tracking-[0.14em] text-ash uppercase">
+              {s.group}
+            </dt>
+            <dd className="mt-4 flex flex-wrap gap-2">
+              {s.items.map((item) => (
+                <span
+                  key={item}
+                  className="rounded-full border border-line bg-panel px-4 py-2 text-sm font-semibold"
+                >
+                  {item}
+                </span>
+              ))}
             </dd>
           </div>
         ))}
@@ -72,81 +110,60 @@ export function Skills() {
   );
 }
 
-export function Education() {
-  return (
-    <Section id="education" label="Education">
-      <ul className="space-y-8">
-        {education.map((ed) => (
-          <li
-            key={ed.school}
-            className="grid gap-1 sm:grid-cols-[1fr_auto] sm:items-baseline sm:gap-8"
-          >
-            <div>
-              <h3 className="font-display text-2xl">{ed.school}</h3>
-              <p className="mt-1 text-mist">{ed.detail}</p>
-            </div>
-            <p className="font-mono text-sm text-mist sm:text-right">
-              {[ed.when, ed.score].filter(Boolean).join(" · ")}
-            </p>
-          </li>
-        ))}
-      </ul>
-    </Section>
-  );
-}
-
-export function BeyondCode() {
-  return (
-    <Section id="beyond" label="Beyond code">
-      <blockquote className="max-w-4xl font-display text-3xl leading-snug text-balance italic sm:text-4xl">
-        {beyondCode}
-      </blockquote>
-    </Section>
-  );
-}
-
 export function Contact() {
   const { email, github, linkedin, resume } = profile.links;
   return (
-    <Section id="contact" label="Contact">
-      <p className="max-w-xl text-lg leading-relaxed text-pretty text-mist">
+    <section
+      id="contact"
+      aria-labelledby="contact-heading"
+      className="mx-auto max-w-[1600px] px-5 pt-20 pb-16 text-center sm:px-10 sm:pt-28"
+    >
+      <h2
+        id="contact-heading"
+        className="text-[clamp(3.5rem,15vw,14rem)] leading-[0.82] font-black tracking-[-0.05em] uppercase"
+      >
+        Let&apos;s <span className="text-signature">talk</span>
+      </h2>
+      <p className="mx-auto mt-10 max-w-xl text-lg leading-relaxed text-pretty text-ash">
         {profile.contactNote}
       </p>
-      <a
-        href={`mailto:${email}`}
-        className="mt-6 block font-display text-[clamp(1.6rem,5.5vw,4.5rem)] leading-tight break-words text-blush transition-colors hover:text-rose"
-      >
-        {email}
-      </a>
-      <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3 font-mono text-sm">
+      <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <a
+          href={`mailto:${email}`}
+          className="bg-signature rounded-full px-8 py-4 text-sm font-extrabold tracking-[0.06em] text-white uppercase shadow-[0_10px_40px_rgb(240_80_155/0.35)] transition-transform hover:scale-[1.04]"
+        >
+          {email}
+        </a>
+        <a
+          href={resume}
+          download
+          className="rounded-full border-[1.5px] border-line px-8 py-4 text-sm font-extrabold tracking-[0.06em] uppercase transition-colors hover:border-fog"
+        >
+          Download resume ↓
+        </a>
+      </div>
+      <ul className="mt-10 flex justify-center gap-8 text-xs font-extrabold tracking-[0.14em] uppercase">
         <li>
           <a
             href={github}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-rose hover:text-blush"
+            className="text-ash transition-colors hover:text-pink"
           >
             GitHub ↗
           </a>
         </li>
-        {linkedin && (
-          <li>
-            <a
-              href={linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-rose hover:text-blush"
-            >
-              LinkedIn ↗
-            </a>
-          </li>
-        )}
         <li>
-          <a href={resume} download className="text-rose hover:text-blush">
-            Download resume ↓
+          <a
+            href={linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-ash transition-colors hover:text-pink"
+          >
+            LinkedIn ↗
           </a>
         </li>
       </ul>
-    </Section>
+    </section>
   );
 }

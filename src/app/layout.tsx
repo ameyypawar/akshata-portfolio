@@ -1,22 +1,11 @@
 import type { Metadata } from "next";
-import { Bodoni_Moda, Fragment_Mono, Hanken_Grotesk } from "next/font/google";
+import { Archivo } from "next/font/google";
 import "./globals.css";
 
-const bodoni = Bodoni_Moda({
-  variable: "--font-bodoni",
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  style: ["normal", "italic"],
-});
-
-const hanken = Hanken_Grotesk({
-  variable: "--font-hanken",
-  subsets: ["latin"],
-});
-
-const fragment = Fragment_Mono({
-  variable: "--font-fragment",
-  subsets: ["latin"],
-  weight: "400",
+  axes: ["wdth"],
 });
 
 export const metadata: Metadata = {
@@ -33,11 +22,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${bodoni.variable} ${hanken.variable} ${fragment.variable} antialiased`}
-    >
-      <body className="min-h-dvh">{children}</body>
+    <html lang="en" className={`${archivo.variable} antialiased`}>
+      <body className="min-h-dvh overflow-x-clip">{children}</body>
     </html>
   );
 }

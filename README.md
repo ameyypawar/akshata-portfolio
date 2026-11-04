@@ -12,7 +12,8 @@ src/content/profile.ts
 
 Edit the values there and the page updates. You don't need to touch the components for content changes.
 
-- **Add a project:** add an entry to `projects` (or `otherWork` for smaller GitHub builds). The first three projects appear as the "Inside" cover lines in the hero; the one with `featured: true` gets the large card.
+- **Add a project:** add an entry to `projects` (or `otherWork` for smaller GitHub builds). The one with `featured: true` gets the large card.
+- **Add a 3D avatar:** put the image in `public/` (a transparent PNG works best) and set `avatar` in `profile.ts`, e.g. `avatar: "/avatar.png"`. Until then the hero shows a gradient orb.
 - **Update the resume:** replace `public/Akshata_Nalawade_Resume.pdf` with the new file, keeping the same name. The "Download resume" buttons point to it.
 
 ## Where things are
@@ -20,11 +21,12 @@ Edit the values there and the page updates. You don't need to touch the componen
 | What | File |
 | --- | --- |
 | Site copy and data | `src/content/profile.ts` |
-| Colours and fonts | `src/app/globals.css` (palette) and `src/app/layout.tsx` (fonts) |
-| Hero (name + cover lines) | `src/components/Hero.tsx` |
+| Colours, gradient, and the 3D orb | `src/app/globals.css` |
+| Font | `src/app/layout.tsx` |
+| Hero (nav, big headline, avatar, Contact me button) | `src/components/Hero.tsx` |
+| Scrolling skills ticker | `src/components/Marquee.tsx` |
 | Projects | `src/components/Work.tsx` |
-| About, Experience, Skills, Education, Contact | `src/components/Sections.tsx` |
-| Top navigation | `src/components/Nav.tsx` |
+| About (with education), Experience, Skills, Contact | `src/components/Sections.tsx` |
 | Page title and link-preview text | `metadata` in `src/app/layout.tsx` |
 | Favicon | `src/app/icon.svg` |
 

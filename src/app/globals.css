@@ -1,65 +1,123 @@
 @import "tailwindcss";
 
 /*
- * Palette taken from Akshata's own GitHub profile, deepened for a full page.
- *   ink      #140a10  page background (plum-black)
- *   surface  #1f1018  cards
- *   line     #3a1f2c  borders / rules
- *   mulberry #8a4560  quiet accents
- *   rose     #d9849f  primary accent
- *   blush    #f2d4e0  primary text
- *   mist     #bfa5b2  secondary text
+ * Palette
+ *   ink        #0a0a0b  page background
+ *   panel      #141416  cards
+ *   line       #26262a  borders
+ *   fog        #e7e7e9  headline / primary text
+ *   ash        #8e8e96  secondary text
+ *   violet → pink → tangerine   the signature gradient
  */
 @theme {
-  --color-ink: #140a10;
-  --color-surface: #1f1018;
-  --color-line: #3a1f2c;
-  --color-mulberry: #8a4560;
-  --color-rose: #d9849f;
-  --color-blush: #f2d4e0;
-  --color-mist: #bfa5b2;
+  --color-ink: #0a0a0b;
+  --color-panel: #141416;
+  --color-line: #26262a;
+  --color-fog: #e7e7e9;
+  --color-ash: #8e8e96;
+  --color-violet: #8b5cf6;
+  --color-pink: #f0509b;
+  --color-tangerine: #fb8a3c;
 
-  --font-display: var(--font-bodoni), "Didot", "Bodoni 72", serif;
-  --font-sans: var(--font-hanken), system-ui, sans-serif;
-  --font-mono: var(--font-fragment), ui-monospace, monospace;
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-marquee: marquee 40s linear infinite;
+}
+
+@utility bg-signature {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-violet),
+    var(--color-pink),
+    var(--color-tangerine)
+  );
+}
+
+@utility text-signature {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-violet),
+    var(--color-pink),
+    var(--color-tangerine)
+  );
+  background-clip: text;
+  color: transparent;
+}
+
+/* A 1.5px gradient border that keeps the card's own background. */
+@utility border-signature {
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(var(--color-panel), var(--color-panel)) padding-box,
+    linear-gradient(
+        90deg,
+        var(--color-violet),
+        var(--color-pink),
+        var(--color-tangerine)
+      )
+      border-box;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
 }
 
 body {
   background: var(--color-ink);
-  color: var(--color-blush);
+  color: var(--color-fog);
   font-family: var(--font-sans);
 }
 
 ::selection {
-  background: var(--color-rose);
+  background: var(--color-pink);
   color: var(--color-ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-rose);
+  outline: 2px solid var(--color-pink);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
-/* Hero: the name rises out of a mask, then the cover lines follow. */
-@keyframes rise {
-  from {
-    transform: translateY(105%);
+/* The glossy 3D orb that stands in for an avatar. */
+.orb {
+  border-radius: 9999px;
+  background:
+    radial-gradient(
+      circle at 33% 27%,
+      rgb(255 255 255 / 0.9) 0 4%,
+      rgb(255 255 255 / 0) 20%
+    ),
+    radial-gradient(circle at 72% 78%, #fb8a3c 0%, rgb(251 138 60 / 0) 48%),
+    radial-gradient(circle at 25% 72%, #8b5cf6 0%, rgb(139 92 246 / 0) 55%),
+    radial-gradient(circle at 50% 45%, #f0509b 0%, #a82a68 62%, #2a0a1f 100%);
+  box-shadow:
+    inset -24px -36px 70px rgb(0 0 0 / 0.5),
+    inset 10px 14px 40px rgb(255 255 255 / 0.12),
+    0 30px 110px rgb(240 80 155 / 0.28);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
   }
+  50% {
+    transform: translateY(-16px) rotate(4deg);
+  }
+}
+
+@keyframes marquee {
   to {
-    transform: translateY(0);
+    transform: translateX(-50%);
   }
 }
 
-@keyframes fade-up {
+@keyframes enter {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -67,21 +125,17 @@ body {
   }
 }
 
-.rise {
-  display: inline-block;
-  animation: rise 1s cubic-bezier(0.2, 0.7, 0.1, 1) both;
-}
-
-.fade-up {
-  animation: fade-up 0.8s ease-out both;
+.enter {
+  animation: enter 0.9s cubic-bezier(0.2, 0.7, 0.1, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .rise,
-  .fade-up {
+  .enter,
+  .animate-float,
+  .animate-marquee {
     animation: none;
   }
 }

@@ -14,6 +14,14 @@ export const profile = {
   thesis:
     "I like turning messy real-world workflows into systems that run on their own.",
 
+  // Small uppercase line under the big headline.
+  intro:
+    "An engineering student who turns messy real-world workflows into systems that run on their own ✨",
+
+  // Path to a 3D avatar image in /public (e.g. "/avatar.png").
+  // Leave empty to show the gradient orb instead.
+  avatar: "",
+
   about: [
     "I'm an Electronics & Computer Science engineering student at Vidyalankar Institute of Technology who builds across full-stack web, applied machine learning, and conversational AI.",
     "Most recently I built House Muse, an AI interior design platform that redesigns a room from a single photo, and shipped a lead-handling chatbot on Zoho SalesIQ during my internship at Trinetrini Quantum. I'm comfortable with Python, JavaScript, SQL, REST APIs, computer vision, and Linux and cloud fundamentals.",
