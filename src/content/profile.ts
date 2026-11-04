@@ -22,9 +22,14 @@ export const profile = {
   links: {
     email: "akshata.nalawade@vit.edu.in",
     github: "https://github.com/nalawadeakshata29",
-    // TODO: add LinkedIn profile URL
-    linkedin: "",
+    linkedin: "https://www.linkedin.com/in/akshata-nalawade-b2297436b/",
+    // To update the resume, replace this file in /public with the same name.
+    resume: "/Akshata_Nalawade_Resume.pdf",
   },
+
+  // Shown above the email address in the Contact section.
+  contactNote:
+    "I'm looking for internships in full-stack development and applied AI. If you're hiring, building something interesting, or just want to talk shop, my inbox is open.",
 };
 
 export type Project = {
@@ -212,18 +217,6 @@ export const education = [
     detail: "B.Tech, Electronics & Computer Science",
     when: "2023 – 2027",
     score: "GPA 7.61 (through Sem V)",
-  },
-  {
-    school: "Guru Nanak Khalsa College of Arts, Science & Commerce",
-    detail: "HSC, Maharashtra State Board",
-    when: "",
-    score: "75.50%",
-  },
-  {
-    school: "IES V. N. Sule Guruji English Medium High School",
-    detail: "SSC, Maharashtra State Board",
-    when: "",
-    score: "72.40%",
   },
 ];
 

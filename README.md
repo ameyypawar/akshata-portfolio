@@ -13,7 +13,7 @@ src/content/profile.ts
 Edit the values there and the page updates. You don't need to touch the components for content changes.
 
 - **Add a project:** add an entry to `projects` (or `otherWork` for smaller GitHub builds). The first three projects appear as the "Inside" cover lines in the hero; the one with `featured: true` gets the large card.
-- **Add LinkedIn:** set `links.linkedin` to your profile URL and a LinkedIn link appears in the Contact section.
+- **Update the resume:** replace `public/Akshata_Nalawade_Resume.pdf` with the new file, keeping the same name. The "Download resume" buttons point to it.
 
 ## Where things are
 

@@ -26,7 +26,7 @@ export function Hero() {
           <p className="mt-4 max-w-md text-mist">
             Full-stack web, applied machine learning, and conversational AI.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
               href={`mailto:${profile.links.email}`}
               className="rounded-full bg-rose px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-blush"
@@ -34,13 +34,30 @@ export function Hero() {
               Email Akshata
             </a>
             <a
-              href={profile.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={profile.links.resume}
+              download
               className="rounded-full border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-rose hover:text-rose"
             >
-              GitHub ↗
+              Download resume ↓
             </a>
+            <span className="flex gap-5 pl-2 font-mono text-xs">
+              <a
+                href={profile.links.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-mist transition-colors hover:text-rose"
+              >
+                GitHub ↗
+              </a>
+              <a
+                href={profile.links.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-mist transition-colors hover:text-rose"
+              >
+                LinkedIn ↗
+              </a>
+            </span>
           </div>
         </div>
 

@@ -106,12 +106,11 @@ export function BeyondCode() {
 }
 
 export function Contact() {
-  const { email, github, linkedin } = profile.links;
+  const { email, github, linkedin, resume } = profile.links;
   return (
     <Section id="contact" label="Contact">
-      <p className="max-w-xl text-lg text-mist">
-        Open to internships, collaborations, and conversations about AI and
-        full-stack work. Email is the fastest way to reach me.
+      <p className="max-w-xl text-lg leading-relaxed text-pretty text-mist">
+        {profile.contactNote}
       </p>
       <a
         href={`mailto:${email}`}
@@ -142,6 +141,11 @@ export function Contact() {
             </a>
           </li>
         )}
+        <li>
+          <a href={resume} download className="text-rose hover:text-blush">
+            Download resume ↓
+          </a>
+        </li>
       </ul>
     </Section>
   );
