@@ -15,13 +15,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Akshata Nalawade — Full-stack, AI & ML",
+  title: "Akshata Nalawade — Applied AI & ML",
   description:
-    "Electronics & Computer Science engineering student in Mumbai building full-stack web apps, applied machine learning, and conversational AI.",
+    "Electronics & Computer Science engineering student in Mumbai building applied AI: generative image pipelines (SDXL, ControlNet, LoRA), computer vision, and conversational AI.",
   openGraph: {
     title: "Akshata Nalawade",
     description:
-      "Full-stack, applied ML, and conversational AI. Builder of House Muse, an AI interior design platform.",
+      "Applied AI: generative models, computer vision, and conversational AI. Builder of House Muse, an AI interior design platform.",
     type: "website",
   },
 };

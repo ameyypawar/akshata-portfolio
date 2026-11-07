@@ -5,7 +5,7 @@
 
 export const profile = {
   name: { first: "Akshata", last: "Nalawade" },
-  role: "Electronics & Computer Science engineer",
+  role: "Applied AI · Electronics & Computer Science",
   location: "Mumbai, India",
   school: "Vidyalankar Institute of Technology",
   classOf: "2027",
@@ -16,15 +16,15 @@ export const profile = {
 
   // Small uppercase line under the big headline.
   intro:
-    "An engineering student who turns messy real-world workflows into systems that run on their own",
+    "An engineering student building applied AI: generative image pipelines, computer vision and chatbots",
 
   // Profile picture in /public, shown in a gradient ring in the hero.
   // A square photo works best. Leave empty to show the gradient orb instead.
   avatar: "/akshata-portrait.jpg",
 
   about: [
-    "I'm an Electronics & Computer Science engineering student at Vidyalankar Institute of Technology who builds across full-stack web, applied machine learning, and conversational AI.",
-    "Most recently I built House Muse, an AI interior design platform that redesigns a room from a single photo, and shipped a lead-handling chatbot on Zoho SalesIQ during my internship at Trinetrini Quantum. I'm comfortable with Python, JavaScript, SQL, REST APIs, computer vision, and Linux and cloud fundamentals.",
+    "I'm an Electronics & Computer Science engineering student at Vidyalankar Institute of Technology focused on applied AI: generative models, computer vision, and conversational AI, built into full-stack products people can actually use.",
+    "Most recently I built House Muse, an AI interior design platform that turns a single room photo into a photorealistic redesign using SDXL, Depth ControlNet and style LoRAs, backed by a YOLOv8, SAM and CLIP vision pipeline. During my internship at Trinetrini Quantum I shipped a lead-handling chatbot on Zoho SalesIQ, and I've completed certifications in prompt engineering and machine learning fundamentals.",
   ],
 
   links: {
@@ -37,7 +37,7 @@ export const profile = {
 
   // Shown above the email address in the Contact section.
   contactNote:
-    "I'm looking for internships in full-stack development and applied AI. If you're hiring, building something interesting, or just want to talk shop, my inbox is open.",
+    "I'm looking for AI and ML roles: generative AI, computer vision, and conversational AI. If you're hiring or building something in that space, my inbox is open.",
 };
 
 export type ProjectImage = {
@@ -92,14 +92,18 @@ export const projects: Project[] = [
       "Catalog-based budget breakdowns in ₹ across 7 categories with an interactive donut chart, plus chat-driven refinement using img2img.",
     ],
     tech: [
+      "PyTorch",
+      "Stable Diffusion XL",
+      "ControlNet",
+      "LoRA",
+      "YOLOv8",
+      "SAM",
+      "CLIP",
+      "Hugging Face",
+      "Flask",
+      "Django REST Framework",
       "React",
       "TypeScript",
-      "Django REST Framework",
-      "Flask",
-      "PostgreSQL",
-      "PyTorch",
-      "OpenCV",
-      "Hugging Face",
     ],
     repo: "https://github.com/nalawadeakshata29/House-Muse",
     featured: true,
@@ -173,26 +177,24 @@ export const projects: Project[] = [
     visual: "chat-flow",
   },
   {
-    slug: "netlab",
-    title: "NetLab",
+    slug: "weather-classification",
+    title: "Weather Classification",
+    kicker: "Three CNNs compared, with Grad-CAM to show why",
     summary:
-      "A virtual network lab, now at v2.0, with six interactive experiments: Stop-and-Wait, Go-Back-N, Selective Repeat, Error Detection, Timeout ARQ, and Window Analysis.",
-    tech: ["JavaScript", "Canvas", "Networking"],
-    repo: "https://github.com/nalawadeakshata29/Net-lab",
-    image: img(
-      "/projects/netlab-home.jpg",
-      "NetLab v2.0 home page listing its six experiments",
-      1440,
-      900,
-    ),
-    images: [
-      img(
-        "/projects/netlab-go-back-n.jpg",
-        "NetLab's Go-Back-N timeline: frames and acknowledgements between sender and receiver, with a lost frame marked in red",
-        1060,
-        740,
-      ),
+      "Classifies weather from sky images, comparing MobileNetV2, ResNet18, and a custom CNN, with Grad-CAM explanations and a Flask web app.",
+    points: [
+      "Evaluates all three models on the same test split, compares them with confusion matrices, and records the best one.",
+      "Grad-CAM heatmaps show which parts of each image drive a prediction.",
+      "Serves predictions through a small Flask web app.",
     ],
+    tech: ["PyTorch", "MobileNetV2", "ResNet18", "CNN", "Grad-CAM", "Flask"],
+    repo: "https://github.com/nalawadeakshata29/Weather-Classification",
+    image: img(
+      "/projects/weather-gradcam.jpg",
+      "Grad-CAM heatmap over a landscape photo, showing the regions the weather classifier relied on",
+      640,
+      427,
+    ),
   },
   {
     slug: "ishaara-speak",
@@ -216,18 +218,26 @@ export const projects: Project[] = [
     visual: "sign",
   },
   {
-    slug: "weather-classification",
-    title: "Weather Classification",
+    slug: "netlab",
+    title: "NetLab",
     summary:
-      "Classifies weather from sky images, comparing MobileNetV2, ResNet18, and a custom CNN, with Grad-CAM explanations and a Flask web app.",
-    tech: ["PyTorch", "CNN", "Grad-CAM", "Flask"],
-    repo: "https://github.com/nalawadeakshata29/Weather-Classification",
+      "A virtual network lab, now at v2.0, with six interactive experiments: Stop-and-Wait, Go-Back-N, Selective Repeat, Error Detection, Timeout ARQ, and Window Analysis.",
+    tech: ["JavaScript", "Canvas", "Networking"],
+    repo: "https://github.com/nalawadeakshata29/Net-lab",
     image: img(
-      "/projects/weather-gradcam.jpg",
-      "Grad-CAM heatmap over a landscape photo, showing the regions the weather classifier relied on",
-      640,
-      427,
+      "/projects/netlab-home.jpg",
+      "NetLab v2.0 home page listing its six experiments",
+      1440,
+      900,
     ),
+    images: [
+      img(
+        "/projects/netlab-go-back-n.jpg",
+        "NetLab's Go-Back-N timeline: frames and acknowledgements between sender and receiver, with a lost frame marked in red",
+        1060,
+        740,
+      ),
+    ],
   },
   {
     slug: "creamy-bliss",
@@ -245,8 +255,8 @@ export const projects: Project[] = [
 
 export const stats = [
   { value: "3", label: "services behind House Muse" },
-  { value: "6", label: "interactive experiments in NetLab" },
   { value: "3", label: "models compared for weather classification" },
+  { value: "2", label: "prompt engineering certifications" },
   { value: "60h", label: "cloud & Linux training at C-DAC" },
 ];
 
@@ -260,9 +270,9 @@ export const ui = {
   ],
   greeting: "Hi, I'm",
   // Small floating tags around the profile picture in the hero.
-  focus: ["Full-stack web", "Computer vision", "Conversational AI"],
+  focus: ["Generative AI", "Computer vision", "Conversational AI"],
   latestProject: "Latest project",
-  availability: "Open to internships", // rendered as "{availability} · Class of {classOf}"
+  availability: "Open to AI/ML roles", // rendered as "{availability} · Class of {classOf}"
   contactCta: "Contact me",
   emailCta: "Email me",
   resumeCta: "Download resume",
@@ -305,6 +315,12 @@ export const experience = [
     ],
   },
   {
+    title: "Prompt Engineering certifications",
+    org: "Introduction to Prompt Engineering · Prompt Engineering Applications",
+    when: "2 Dec 2025",
+    points: ["Certificate codes 9515491 and 9515955."],
+  },
+  {
     title: "Certificate Course in Cloud Computing",
     org: "C-DAC ACTS, Pune",
     when: "5 June – 15 June",
@@ -321,52 +337,71 @@ export const experience = [
   },
 ];
 
+// AI groups first: the portfolio is aimed at AI/ML roles.
 export const skills: { group: string; items: string[] }[] = [
   {
-    group: "Languages",
-    items: ["Python", "JavaScript", "TypeScript", "SQL", "HTML5", "CSS3"],
-  },
-  {
-    group: "Frontend",
-    items: ["React", "Vite", "Tailwind CSS", "Responsive UI", "Figma"],
-  },
-  {
-    group: "Backend & APIs",
+    group: "Generative AI",
     items: [
-      "Node.js",
-      "Django",
-      "Django REST Framework",
-      "Flask",
-      "REST APIs",
-      "Token auth",
-      "Google OAuth",
+      "Stable Diffusion XL",
+      "ControlNet",
+      "LoRA",
+      "img2img",
+      "Prompt engineering",
     ],
   },
-  { group: "Databases", items: ["PostgreSQL", "SQLite"] },
   {
-    group: "AI / ML & vision",
+    group: "Computer vision",
+    items: ["YOLOv8", "SAM", "CLIP", "OpenCV", "MediaPipe", "Grad-CAM"],
+  },
+  {
+    group: "Machine learning",
     items: [
+      "PyTorch",
       "CNN",
+      "MobileNetV2 / ResNet18",
       "KNN",
-      "YOLOv8",
-      "OpenCV",
-      "MediaPipe",
-      "Stable Diffusion (SDXL, ControlNet)",
       "K-Means",
       "Pandas",
       "NumPy",
     ],
   },
   {
-    group: "Cloud & tools",
+    group: "Conversational AI",
     items: [
+      "Zoho SalesIQ",
+      "Intent mapping",
+      "Decision-tree flows",
+      "Workflow automation",
+    ],
+  },
+  {
+    group: "Languages & web",
+    items: [
+      "Python",
+      "TypeScript",
+      "JavaScript",
+      "SQL",
+      "React",
+      "Django REST Framework",
+      "Flask",
+      "Node.js",
+      "REST APIs",
+      "Google OAuth",
+      "Tailwind CSS",
+    ],
+  },
+  {
+    group: "Data, cloud & tools",
+    items: [
+      "PostgreSQL",
+      "SQLite",
+      "Hugging Face Spaces",
       "Linux",
       "Cloud computing",
-      "Hugging Face Spaces",
       "Git & GitHub",
       "Jupyter",
       "Google Colab",
-      "Zoho SalesIQ",
+      "Figma",
     ],
   },
 ];
